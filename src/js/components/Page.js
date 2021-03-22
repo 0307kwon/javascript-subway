@@ -2,13 +2,15 @@ import Component from './Component';
 
 class Page extends Component {
   url;
+  initialUrl;
 
   constructor(props) {
     super(props);
+    this.initialUrl = window.location.origin;
   }
 
   initialRoute(path) {
-    history.replaceState({ path: '/' }, null, '/');
+    history.replaceState({ path: this.initialUrl + '/' }, null, '/');
     this.route(path, false);
   }
 
@@ -18,7 +20,8 @@ class Page extends Component {
     }
 
     if (shouldPushState) {
-      history.pushState({ path }, null, path);
+      const actualPath = this.initialUrl + path;
+      history.pushState({ path: actualPath }, null, actualPath);
     }
 
     this.url[path].render();
