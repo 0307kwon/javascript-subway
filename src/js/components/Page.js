@@ -6,11 +6,13 @@ class Page extends Component {
 
   constructor(props) {
     super(props);
-    this.initialUrl = window.location.origin;
+    this.initialUrl = window.location.href.slice(0, -1);
+    console.log(this.initialUrl);
   }
 
   initialRoute(path) {
-    history.replaceState({ path: this.initialUrl + '/' }, null, '/');
+    const actualPath = this.initialUrl + path;
+    history.replaceState({ path: actualPath }, null, actualPath);
     this.route(path, false);
   }
 
